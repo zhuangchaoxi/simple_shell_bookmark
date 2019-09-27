@@ -114,19 +114,26 @@ function a(){
 
 function r(){
      data_init $1
+     targets_len=${#targets[@]}
      last_ix=0
      del_num=0
      for ix in "$@"
      do
+        _ix=${ix}
         if [ "${ix}" -gt 0 ] 2>/dev/null;then
             if [ ${ix} -gt ${last_ix} ];then
                 ((ix=${ix}-${del_num}))
+                if [ ${ix} -gt ${targets_len} ];then
+                    echo -e "This bookmark index ${_ix} is out of range."
+                    continue
+                fi
             fi
             del_bookmark=`sed -n ''${ix}'p' ${db}`
             echo -e "delete a bookmark: ${del_bookmark}"
             sed -i '' "${ix}d" ${db}
             last_ix=${ix}
             ((del_num++))
+            ((targets_len--))
         else
             echo -e "Each index must be a number, but ${ix} is not."
         fi
