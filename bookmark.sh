@@ -27,8 +27,8 @@ function __help {
 
 
 function __get_user_dir(){
-    result=$(echo ${platform} | grep "Darwin")
-    if [[ "$result" != "" ]];then
+    mac_plat=$(echo ${platform} | grep "Darwin")
+    if [[ "$mac_plat" != "" ]];then
          user_dir=/Users/${username}
     else
          if [[ "${username}" == "root" ]];then
@@ -85,7 +85,7 @@ function b(){
 
 function t(){
      data_init $1
-     if [[ "${result}" != "" ]];then
+     if [[ "${mac_plat}" != "" ]];then
         target=${targets[$1]}
      else
         target=${targets[$1-1]}
@@ -128,9 +128,14 @@ function r(){
                     continue
                 fi
             fi
-            del_bookmark=`sed -n ''${ix}'p' ${db}`
+            if [[ "${mac_plat}" != "" ]];then
+                del_bookmark=`sed -n ''${ix}'p' ${db}`
+                sed -i '' "${ix}d" ${db}
+            else
+                del_bookmark=`sed -n "${ix}p" ${db}`
+                sed -i "${ix}d" ${db}
+            fi
             echo -e "delete a bookmark: ${del_bookmark}"
-            sed -i '' "${ix}d" ${db}
             last_ix=${ix}
             ((del_num++))
             ((targets_len--))
