@@ -19,7 +19,7 @@ function __help {
 		echo 'a  - Add the current directory to bookmark'
 		echo 't <bookmark_index>  - Goes (cd) to the directory associated with "bookmark_index"'
 		echo 'r <bookmark_index> ...  - Deletes the bookmark with index'
-		echo 'da  - Deletes all bookmark'
+		echo 'c  - Deletes all bookmark'
 		echo -e "\n"
 		__exit
 	fi
@@ -127,7 +127,7 @@ function r(){
 }
 
 
-function da(){
+function c(){
     data_init $1
     ix=1
     while true
