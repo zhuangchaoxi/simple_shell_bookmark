@@ -114,14 +114,21 @@ function a(){
 
 function r(){
      data_init $1
-     for ix in $@
+     last_ix=0
+     del_num=0
+     for ix in "$@"
      do
         if [ "${ix}" -gt 0 ] 2>/dev/null;then
-            del_bookmark=`sed -n ''$1'p' ${db}`
+            if [ ${ix} -gt ${last_ix} ];then
+                ((ix=${ix}-${del_num}))
+            fi
+            del_bookmark=`sed -n ''${ix}'p' ${db}`
             echo -e "delete a bookmark: ${del_bookmark}"
-            sed -i '' "$1d" ${db}
+            sed -i '' "${ix}d" ${db}
+            last_ix=${ix}
+            ((del_num++))
         else
-            echo 'Echo of bookmark index must be a number.'
+            echo -e "Each index must be a number, but ${ix} is not."
         fi
      done
 }
