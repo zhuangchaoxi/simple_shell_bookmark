@@ -2,7 +2,8 @@
 简易shell目录书签，支持apple和linux。
 
 # 部署
-将Makefile和bookmark.sh放到任意有权限的目录下执行make install
+- 将install.sh和bookmark.sh放到任意有权限的目录下执行sh install.sh
+- 打开一个新的终端使用
 
 # 使用说明(任意有权限的目录下执行以下指令)：
 - 查看书签列表：b
